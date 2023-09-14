@@ -1,4 +1,4 @@
-## ica0002
-# Dmytro Dundakov
-# 223666IVSB
-# dmdund
+## Information
+- Name: Dmytro Dundakov
+- Student code: 223666IVSB
+- Uni-id: dmdund
