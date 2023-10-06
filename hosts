@@ -1,4 +1,8 @@
-demetr25-1 ansible_host=193.40.156.67 ansible_port=18022 ansible_user=ubuntu
+demetr25-1 ansible_host=193.40.156.67 ansible_port=14722 ansible_user=ubuntu
+demetr25-2 ansible_host=193.40.156.67 ansible_port=19522 ansible_user=ubuntu
+
+[db_servers]
+demetr25-2
 
 [web_servers]
 demetr25-1
