@@ -3,14 +3,28 @@
     hosts: all
     roles:
       - init
+
+  - name: DNS server
+    hosts: dns_servers
+    gather_facts: no
+    roles:
+      - bind9
       
+  - name: Update DNS
+    hosts: all
+    gather_facts: no
+    roles:
+      - update_vm_dns  
+
   - name: Database server
     hosts: db_servers
+    gather_facts: no
     roles:
       - mysql
      
   - name: Web server
     hosts: web_servers
+    gather_facts: no
     roles:
       - agama
       - uwsgi

@@ -1,0 +1,15 @@
+acl corpnets { 
+  {% for n in network_localhost -%}
+  {{ n }}; 
+  {%- endfor -%} };
+options {
+  directory "/var/lib/bind";
+
+  allow-query { corpnets; };
+
+  forwarders {
+    {% for n in DNS_forwarders %}
+    {{ n }};
+    {%- endfor %}
+  };
+};
