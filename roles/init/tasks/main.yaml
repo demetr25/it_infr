@@ -26,3 +26,8 @@
 - name: Update APT cache
   ansible.builtin.apt:
     cache_valid_time: 86400
+
+- name: Install prometheus node exporters
+  ansible.builtin.apt:
+    name: prometheus-node-exporter
+    state: present

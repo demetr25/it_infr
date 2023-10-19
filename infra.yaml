@@ -21,6 +21,9 @@
     gather_facts: no
     roles:
       - mysql
+      - prometheus
+    tags: a
+
      
   - name: Web server
     hosts: web_servers

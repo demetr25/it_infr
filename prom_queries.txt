@@ -1,0 +1,4 @@
+node_memory_MemTotal_bytes - node_memory_MemFree_bytes{instance="demetr25-1:9100", job="linux"}
+node_memory_MemTotal_bytes - node_memory_MemFree_bytes{instance="demetr25-2:9100", job="linux"}
+rate(node_cpu_seconds_total{cpu="0", instance="demetr25-1:9100", job="linux", mode="idle"}[1m])
+rate(node_cpu_seconds_total{cpu="0", instance="demetr25-2:9100", job="linux", mode="idle"}[1m])
