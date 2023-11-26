@@ -9,21 +9,35 @@
     gather_facts: no
     roles:
       - bind
+    tags: b
       
   - name: Update DNS
     hosts: all
     gather_facts: no
     roles:
       - update_vm_dns  
+    tags: u
 
   - name: Database server
     hosts: db_servers
     gather_facts: no
     roles:
       - mysql
-      - prometheus
-    tags: a
+    tags: db
 
+  - name: Prometheus
+    hosts: db_servers
+    gather_facts: no
+    roles:
+      - prometheus
+    tags: p
+
+  - name: Grafana
+    hosts: web_servers
+    gather_facts: no
+    roles:
+      - grafana
+    tags: g
      
   - name: Web server
     hosts: web_servers
@@ -32,3 +46,4 @@
       - agama
       - uwsgi
       - nginx
+    tags: w

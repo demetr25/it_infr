@@ -31,3 +31,8 @@
   ansible.builtin.apt:
     name: prometheus-node-exporter
     state: present
+
+- name: Install up-to-date CA certificates
+  ansible.builtin.apt:
+    name: ca-certificates=20230311ubuntu0.20.04.1
+    state: present

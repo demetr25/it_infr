@@ -2,6 +2,11 @@
   ansible.builtin.apt:
     name: nginx
     state: present
+
+- name: Install prometheus-nginx-exporter
+  ansible.builtin.apt:
+    name: prometheus-nginx-exporter
+    state: present
     
 - name: Copy default
   ansible.builtin.template:
@@ -9,9 +14,16 @@
     dest: /etc/nginx/sites-enabled/default
   notify: 
     - Restart nginx
+    - Restart prometheus-nginx-exporter
     
 - name: nginx service
   ansible.builtin.service:
     name: nginx
+    state: started
+    enabled: true
+
+- name: prometheus-nginx-exporter service
+  ansible.builtin.service:
+    name: prometheus-nginx-exporter
     state: started
     enabled: true

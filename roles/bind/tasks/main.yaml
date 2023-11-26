@@ -30,6 +30,17 @@
     state: started
     enabled: true
 
+- name: Install prometheus-bind-exporter
+  ansible.builtin.apt:
+    name: prometheus-bind-exporter
+    state: present
+
+- name: prometheus-bind-exporter service
+  ansible.builtin.service:
+    name: prometheus-bind-exporter
+    state: started
+    enabled: true
+
 #- name: Collect variables
 #  ansible.builtin.setup:
 
