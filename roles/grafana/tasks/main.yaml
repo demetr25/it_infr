@@ -67,6 +67,11 @@
   ansible.builtin.copy:
     src: main.json
     dest: /var/lib/grafana/dashboards/main.json
+
+- name: Copy syslog.json
+  ansible.builtin.copy:
+    src: syslog.json
+    dest: /var/lib/grafana/dashboards/syslog.json
   notify: 
     - Restart grafana-server
 

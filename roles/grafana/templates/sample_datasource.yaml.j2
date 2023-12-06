@@ -9,3 +9,21 @@ datasources:
   url: http://{{vm2}}:9090/prometheus
   version: 1
   editable: false
+
+- name: influxdb:pinger
+  type: influxdb
+  access: proxy
+  uid: c2cf1146-2753-4417-95c7-830b40fc45d2
+  url: http://{{vm2}}:8086
+  jsonData: 
+    dbName: latency
+  editable: false
+
+- name: influxdb:telegraf
+  type: influxdb
+  access: proxy
+  uid: b40edd86-7526-4ad3-af9b-c7db4a3966a5
+  url: http://{{vm2}}:8086
+  jsonData:
+    dbName: telegraf
+  editable: false

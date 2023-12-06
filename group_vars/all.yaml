@@ -38,3 +38,5 @@ network_localhost:
 startup_name: akamly.dd
 vm1: demetr25-1
 vm2: demetr25-2
+
+influx_host: demetr25-2

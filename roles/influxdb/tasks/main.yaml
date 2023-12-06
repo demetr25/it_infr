@@ -1,0 +1,69 @@
+- name: Download InfluxDB deb package
+  ansible.builtin.get_url:
+    url: https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb
+    dest: /tmp/influxdb_1.8.10_amd64.deb
+
+- name: Install InfluxDB deb package
+  ansible.builtin.apt:
+    deb: /tmp/influxdb_1.8.10_amd64.deb
+    state: present
+
+- name: Import Influxdata repository key
+  ansible.builtin.apt_key:
+    url: https://repos.influxdata.com/influxdata-archive_compat.key
+    state: present
+
+- name: Add InfluxData APT repository
+  ansible.builtin.apt_repository:
+    repo: deb https://repos.influxdata.com/debian stable main
+    state: present
+
+- name: Copy influxdb.conf
+  ansible.builtin.template:
+    src: influxdb.conf.j2
+    dest: /etc/influxdb/influxdb.conf
+  notify: 
+    - Restart influxdb
+
+- name: InfluxDB service
+  ansible.builtin.service:
+    name: influxdb
+    state: started
+    enabled: true
+
+- name: Install Telegraf
+  ansible.builtin.apt:
+    name: telegraf=1.28.2-1
+    state: present
+
+- name: Copy telegraf.conf
+  ansible.builtin.template:
+    src: telegraf.conf.j2
+    dest: /etc/telegraf/telegraf.conf
+  notify: 
+    - Restart telegraf
+
+- name: Telegraf service
+  ansible.builtin.service:
+    name: telegraf
+    state: started
+    enabled: true
+
+- name: Download InfluxDB Stats Exporter Binary
+  ansible.builtin.get_url:
+    url: "https://github.com/carlpett/influxdb_stats_exporter/releases/download/v0.1.1/influx_stats_exporter_linux_amd64"
+    dest: /usr/local/bin/influxdb_stats_exporter
+    mode: '0755'
+  notify: Restart influxdb_stats_exporter
+
+- name: Create systemd Service for InfluxDB Stats Exporter
+  ansible.builtin.template:
+    src: prometheus-influxdb-stats-exporter.service.j2
+    dest: /etc/systemd/system/prometheus-influxdb-stats-exporter.service
+  notify: Restart influxdb_stats_exporter daemon
+
+- name: Start and Enable InfluxDB Stats Exporter Service
+  ansible.builtin.service:
+    name: prometheus-influxdb-stats-exporter
+    state: started
+    enabled: yes

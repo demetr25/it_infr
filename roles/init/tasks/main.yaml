@@ -36,3 +36,16 @@
   ansible.builtin.apt:
     name: ca-certificates=20230311ubuntu0.20.04.1
     state: present
+
+- name: Copy tel.conf for rsyslog
+  ansible.builtin.template:
+    src: tel.conf.j2
+    dest: /etc/rsyslog.d/tel.conf
+  notify: 
+    - Restart rsyslog
+
+- name: rsyslog service
+  ansible.builtin.service:
+    name: rsyslog
+    state: started
+    enabled: true

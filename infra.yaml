@@ -26,14 +26,28 @@
     tags: db
 
   - name: Prometheus
-    hosts: db_servers
+    hosts: prometheus
     gather_facts: no
     roles:
       - prometheus
-    tags: p
+    tags: pr
+
+  - name: InfluxDB
+    hosts: influxdb
+    gather_facts: no
+    roles:
+      - influxdb
+    tags: i
+
+  - name: pinger
+    hosts: pinger
+    gather_facts: no
+    roles:
+      - pinger
+    tags: pi
 
   - name: Grafana
-    hosts: web_servers
+    hosts: grafana
     gather_facts: no
     roles:
       - grafana
