@@ -4,7 +4,7 @@
 
 ### MySQL Database
 
-**Backup Coverage:**
+***Backup Coverage:***
 - Backed up: Database schemas, tables, and configuration files.
 - Not backed up: Temporary files, cache, and non-essential logs.
 
