@@ -23,7 +23,7 @@
 
 **Restoration Criteria:**
 - Backup should be restored in the event of:
-- Database corruption or loss.
+-- Database corruption or loss.
 - Unintentional data deletion.
 - Critical configuration changes leading to issues.
 
