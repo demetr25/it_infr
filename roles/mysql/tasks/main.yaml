@@ -16,16 +16,36 @@
     state: started
     enabled: true
 
-- name: Copy .my.cnf
+- name: Copy .my.cnf for prometheus-mysqld-exporter
   ansible.builtin.template:
-    src: my.cnf.j2
+    src: my.cnf.promexp.j2
     dest: /var/lib/prometheus/.my.cnf
     owner: prometheus
     mode: 0600
   no_log: true
   notify:
     - Restart prometheus-mysqld-exporter
+
+- name: Create a directory for mysql backup
+  ansible.builtin.file:
+    path: /home/backup/mysql
+    state: directory
+    owner: backup
+    mode: '0700'
     
+- name: Copy .my.cnf for backup user
+  ansible.builtin.template:
+    src: my.cnf.backup.j2
+    dest: /home/backup/.my.cnf
+    owner: backup
+    mode: 0400
+  notify: Restart mysql
+
+- name: Copy cron tab 
+  ansible.builtin.template:
+    src: cron_tab.j2
+    dest: /etc/cron.d/mysql-backup
+
 - name: Install python3-pymysql
   ansible.builtin.apt:
     name: python3-pymysql
@@ -62,3 +82,10 @@
     name: prometheus-mysqld-exporter
     state: started
     enabled: true
+
+- name: MySQL backup user
+  community.mysql.mysql_user:
+    name: "{{ mysql_backup }}"
+    password: "{{ mysql_backup_password }}"
+    priv: "*.*:LOCK TABLES,SELECT"
+    login_unix_socket: /var/run/mysqld/mysqld.sock

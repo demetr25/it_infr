@@ -37,6 +37,11 @@
     name: ca-certificates=20230311ubuntu0.20.04.1
     state: present
 
+- name: Install Duplicity
+  ansible.builtin.apt:
+    name: duplicity
+    state: present
+
 - name: Copy tel.conf for rsyslog
   ansible.builtin.template:
     src: tel.conf.j2
@@ -64,3 +69,10 @@
     dest: /home/backup/.ssh/known_hosts
     owner: backup
     group: backup
+
+- name: Create a directory backup/restore
+  ansible.builtin.file:
+    path: /home/backup/restore
+    state: directory
+    owner: backup
+    mode: '0755'

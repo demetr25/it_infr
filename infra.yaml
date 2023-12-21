@@ -3,6 +3,7 @@
     hosts: all
     roles:
       - init
+    tags: in
 
   - name: DNS server
     hosts: dns_servers
