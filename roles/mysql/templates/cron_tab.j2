@@ -1,4 +1,6 @@
+{% if inventory_hostname == mysql_backup_host %}
 50 19 * * *   backup  mysqldump agama > /home/backup/mysql/agama.sql
 0 20 * * 0  backup  duplicity --no-encryption full /home/backup/mysql/ rsync://demetr25@backup.{{ startup_name }}//home/demetr25/mysql
 0 20 * * 1-6  backup  duplicity --no-encryption incremental /home/backup/mysql/ rsync://demetr25@backup.{{ startup_name }}//home/demetr25/mysql
 0 18 * * 0  backup  duplicity remove-older-than 30D rsync://demetr25@backup.{{ startup_name }}//home/demetr25/mysql
+{% endif %}

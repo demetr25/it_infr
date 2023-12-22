@@ -4,8 +4,8 @@
     state: present
    
 - name: Copy override.cnf
-  ansible.builtin.copy:
-    src: override
+  ansible.builtin.template:
+    src: override.j2
     dest: /etc/mysql/mysql.conf.d/override.cnf
   notify:
     - Restart mysql
@@ -55,12 +55,21 @@
   ansible.builtin.apt: 
     name: prometheus-mysqld-exporter
     state: present
+
+- name: Copy prometheus-mysqld-exporter file
+  ansible.builtin.template:
+    src: prometheus-mysqld-exporter.j2
+    dest: /etc/default/prometheus-mysqld-exporter
+  notify: Restart prometheus-mysqld-exporter
     
 - name: MySQL database
   community.mysql.mysql_db:
     name: "{{ mysql_database }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
-    
+  notify: 
+    - Reset MySQL source
+    - Reset MySQL replica
+
 - name: MySQL user
   community.mysql.mysql_user:
     name: "{{ mysql_user }}"
@@ -77,6 +86,15 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: true
 
+- name: MySQL replication user
+  community.mysql.mysql_user:
+    name: "{{ mysql_replication }}"
+    password: "{{ mysql_replication_password }}"
+    host: "%"
+    priv: "*.*:REPLICATION SLAVE"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
+
 - name: prometheus-mysqld-exporter service
   ansible.builtin.service:
     name: prometheus-mysqld-exporter
@@ -89,3 +107,13 @@
     password: "{{ mysql_backup_password }}"
     priv: "*.*:LOCK TABLES,SELECT"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Set read only mode for replica server
+  community.mysql.mysql_variables:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    variable: read_only
+    value: "{{ 'OFF' if inventory_hostname == mysql_host else 'ON' }}"
+    mode: persist
+  notify: 
+    - Reset MySQL source
+    - Reset MySQL replica
