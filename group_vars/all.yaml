@@ -1,5 +1,6 @@
-mysql_host: demetr25-1
+mysql_host: demetr25-2
 
+agama_port: 8001
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -37,6 +38,7 @@ mysql_replication_password: !vault |
           3938616631646134390a356661653631306234643661653262393064643864363634656361323431
           34386139323532666162303666316138313438396130623838623932663062373766
 
+grafana_port: 3001
 grafana_user: demetr25
 grafana_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256

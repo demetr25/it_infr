@@ -1,0 +1,87 @@
+# - name: Install required packages
+#   ansible.builtin.apt:
+#     name: "{{ item }}"
+#     state: present
+#     loop:
+#       - apt-transport-https
+#       - software-properties-common
+#       - wget
+
+- name: Install required package
+  ansible.builtin.apt:
+    name: apt-transport-https
+    state: present
+
+- name: Create keyrings directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings/
+    state: directory
+
+- name: Download Grafana GPG key and add to keyring
+  ansible.builtin.apt_key:
+    url: https://apt.grafana.com/gpg.key
+    keyring: /etc/apt/keyrings/grafana.gpg
+
+- name: Add Grafana repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main"
+    state: present
+
+# - name: Update package list
+#   ansible.builtin.apt:
+#     update_cache: yes
+
+- name: Install Grafana
+  ansible.builtin.apt:
+    name: grafana
+    state: present
+
+
+- name: Copy grafana.ini
+  ansible.builtin.template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini 
+  notify: 
+    - Restart grafana-server
+
+- name: Copy sample_datasource.yaml
+  ansible.builtin.template:
+    src: sample_datasource.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/sample.yaml
+  notify: 
+    - Restart grafana-server
+
+- name: Copy sample_dashboard.yaml
+  ansible.builtin.template:
+    src: sample_dashboard.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/sample.yaml
+  notify: 
+    - Restart grafana-server
+
+- name: Create keyrings directory
+  ansible.builtin.file:
+    path: /var/lib/grafana/dashboards
+    state: directory
+
+- name: Copy main.json
+  ansible.builtin.copy:
+    src: main.json
+    dest: /var/lib/grafana/dashboards/main.json
+
+- name: Copy syslog.json
+  ansible.builtin.copy:
+    src: syslog.json
+    dest: /var/lib/grafana/dashboards/syslog.json
+
+- name: Copy mysql.json
+  ansible.builtin.copy:
+    src: mysql.json
+    dest: /var/lib/grafana/dashboards/mysql.json
+  notify: 
+    - Restart grafana-server
+
+- name: Grafana service
+  ansible.builtin.service:
+    name: grafana-server
+    state: started
+    enabled: true
