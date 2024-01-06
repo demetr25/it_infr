@@ -1,0 +1,10 @@
+- name: Restart keepalived-exporter
+  systemd:
+    state: restarted
+    daemon_reload: true
+    name: keepalived-exporter
+
+- name: Restart keepalived
+  ansible.builtin.service:
+    name: keepalived
+    state: restarted

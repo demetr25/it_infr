@@ -3,6 +3,7 @@
     hosts: all
     roles:
       - init
+      - docker
     tags: in
 
   - name: DNS server
@@ -47,12 +48,12 @@
       - pinger
     tags: pi
 
-  - name: Docker
-    hosts: docker_servers
-    gather_facts: no
-    roles:
-      - docker
-    tags: d
+  # - name: Docker
+  #   hosts: docker_servers
+  #   gather_facts: no
+  #   roles:
+  #     - docker
+  #   tags: d
 
   - name: Grafana
     hosts: grafana
@@ -69,3 +70,17 @@
       #- uwsgi
       - nginx
     tags: w
+
+  - name: keepalived
+    hosts: keepalived
+    gather_facts: yes
+    roles:
+      - keepalived
+    tags: k
+
+  - name: haproxy
+    hosts: haproxy
+    gather_facts: no
+    roles:
+      - haproxy
+    tags: h

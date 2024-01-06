@@ -1,6 +1,24 @@
+port1: 8422
+port2: 17022
+
 mysql_host: demetr25-2
 
+influx_host: demetr25-2
+
+mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first | default(mysql_host) }}"
+
 agama_port: 8001
+agama_quantity: 2
+
+keepalived_master: demetr25-1
+keepalived_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          64666431303837336137653761663065353134653832623732633733653266653435623138353838
+          3735316437646236366166633861343932333163336335610a376561313165353065376534343563
+          31386435623631613434666231623632386266336138623962363662323761633234366437383834
+          3932653338643433340a386461333163353738303062663938323031333932376238353531303037
+          6332
+
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -51,20 +69,20 @@ grafana_password: !vault |
 
 node_id: "{{ (ansible_port / 100) | int }}"
 
-mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first | default(mysql_host) }}"
-
 DNS_forwarders: 
   - 1.1.1.1
   - 8.8.8.8
   - 9.9.9.9
+
 network_localhost:
   - 192.168.42.0/23
   - 127.0.0.0/8
+  - 172.17.0.0/16
+
 startup_name: akamly.dd
+
 vm1: demetr25-1
 vm2: demetr25-2
-
-influx_host: demetr25-2
 
 backup_server_ip: 192.168.42.132
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90

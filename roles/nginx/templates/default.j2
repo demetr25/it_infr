@@ -8,7 +8,7 @@ server {
 	}
 
 	location /prometheus {
-		proxy_pass http://{{ vm2 }}:9090;
+		proxy_pass http://localhost:9090;
 	}
 
 	location /grafana {

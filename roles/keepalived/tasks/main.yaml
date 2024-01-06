@@ -1,0 +1,56 @@
+- name: Add the user "keepalived_script"
+  user: 
+    name: keepalived_script
+    state: present
+    createhome: true
+    home: "/home/keepalived_script/"
+
+- name: Copy script
+  template:
+    dest: /home/keepalived_script/keepalived_script
+    src: keepalived_script.j2
+    mode: '0755'
+    owner: keepalived_script
+    group: keepalived_script
+  notify: Restart keepalived
+
+- name: Install keepalived
+  apt:
+    name: keepalived
+  
+- name: Copy conf
+  template:
+    dest: /etc/keepalived/keepalived.conf
+    src: keepalived.conf.j2
+  notify: Restart keepalived
+
+- name: keepalived service
+  service:
+   name: keepalived
+   state: started
+   enabled: true
+
+- name: Download keepalived-exporter tar.gz
+  get_url:
+    url: http://backup/keepalived-exporter-1.2.0.linux-amd64.tar.gz
+    dest: /opt/
+
+- name: Unarchive keepalived-exporter
+  unarchive:
+    src: /opt/keepalived-exporter-1.2.0.linux-amd64.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Create systemd unit for keepalived-exporter
+  template:
+    src: keepalived-exporter.service.j2
+    dest: /etc/systemd/system/keepalived-exporter.service
+  notify:
+    - Restart keepalived-exporter
+    - Restart keepalived
+
+- name: keepalived-exporter service
+  systemd:
+    name: keepalived-exporter
+    state: started
+    enabled: true
