@@ -3,26 +3,10 @@
     name: bind9
     state: present
 
-- name: Copy named.conf.options
-  ansible.builtin.template:
-    src: named.conf.options.j2
-    dest: /etc/bind/named.conf.options
-  notify:
-    - Restart bind9
-
-- name: Copy named.conf.local
-  ansible.builtin.template:
-    src: named.conf.local.j2
-    dest: /etc/bind/named.conf.local
-  notify:
-    - Restart bind9
-
-- name: Copy db.j2
-  ansible.builtin.template:
-    src: db.j2
-    dest: /var/lib/bind/db.{{ startup_name }}
-  notify:
-    - Restart bind9
+- name: Install python3-dnspython
+  ansible.builtin.apt:
+    name: python3-dnspython
+    state: present
 
 - name: bind9 service
   ansible.builtin.service:
@@ -40,6 +24,42 @@
     name: prometheus-bind-exporter
     state: started
     enabled: true
+
+- name: Copy named.conf.options
+  ansible.builtin.template:
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+  notify:
+    - Restart bind9
+
+- name: Copy named.conf.local
+  ansible.builtin.template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+  notify:
+    - Restart bind9
+
+- name: Copy db.j2
+  ansible.builtin.template:
+    src: zone.j2
+    dest: /var/lib/bind/db.{{ startup_name }}
+    force: no
+  notify: Restart bind9
+  when: inventory_hostname in groups['dns_primary']
+
+- name: Copy db.rev.j2
+  ansible.builtin.template:
+    src: zone.rev.j2
+    dest: /var/lib/bind/db.rev
+    force: no
+  notify: Restart bind9
+  when: inventory_hostname in groups['dns_primary']
+
+- name: Copy resolv.conf
+  ansible.builtin.template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+  notify: Restart bind9
 
 #- name: Collect variables
 #  ansible.builtin.setup:

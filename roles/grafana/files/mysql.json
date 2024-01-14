@@ -303,7 +303,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 24,
+        "w": 12,
         "x": 0,
         "y": 9
       },
@@ -330,15 +330,19 @@
             "type": "prometheus",
             "uid": "cd87c903-557e-4691-9728-19e6ce2023f8"
           },
-          "editorMode": "code",
-          "expr": "mysql_slave_status_slave_io_running",
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "mysql_slave_status_slave_io_running{instance=\"demetr25-1:9104\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A"
+          "refId": "A",
+          "useBackend": false
         }
       ],
-      "title": "MySQL replica IO Thread",
+      "title": "MySQL replica IO Thread 1",
       "type": "stat"
     },
     {
@@ -388,7 +392,96 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 24,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "cd87c903-557e-4691-9728-19e6ce2023f8"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "mysql_slave_status_slave_io_running{instance=\"demetr25-2:9104\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "MySQL replica IO Thread 2",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "cd87c903-557e-4691-9728-19e6ce2023f8"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 0,
+                  "text": "Stopped"
+                },
+                "1": {
+                  "index": 1,
+                  "text": "Running"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 12,
         "x": 0,
         "y": 12
       },
@@ -415,15 +508,108 @@
             "type": "prometheus",
             "uid": "cd87c903-557e-4691-9728-19e6ce2023f8"
           },
-          "editorMode": "code",
-          "expr": "mysql_slave_status_slave_sql_running",
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "mysql_slave_status_slave_sql_running{instance=\"demetr25-1:9104\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A"
+          "refId": "A",
+          "useBackend": false
         }
       ],
-      "title": "MySQL replica SQL Thread",
+      "title": "MySQL replica SQL Thread 1",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "cd87c903-557e-4691-9728-19e6ce2023f8"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 0,
+                  "text": "Stopped"
+                },
+                "1": {
+                  "index": 1,
+                  "text": "Running"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "cd87c903-557e-4691-9728-19e6ce2023f8"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "mysql_slave_status_slave_sql_running{instance=\"demetr25-2:9104\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "MySQL replica SQL Thread 2",
       "type": "stat"
     },
     {
@@ -523,7 +709,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "",
+  "refresh": "5s",
   "schemaVersion": 39,
   "tags": [],
   "templating": {

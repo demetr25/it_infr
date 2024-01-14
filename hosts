@@ -1,8 +1,15 @@
 demetr25-1 ansible_host=193.40.156.67 ansible_port="{{ port1 }}" ansible_user=ubuntu
 demetr25-2 ansible_host=193.40.156.67 ansible_port="{{ port2 }}" ansible_user=ubuntu
 
-[dns_servers]
+[dns_servers:children]
+dns_primary
+dns_secondary
+
+[dns_primary]
 demetr25-2
+
+[dns_secondary]
+demetr25-1
 
 [db_servers]
 demetr25-1

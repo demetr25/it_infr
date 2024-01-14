@@ -6,10 +6,11 @@ $TTL	604800
 			2419200		; Expire
 			 604800 )	; Negative Cache TTL
 ;
-{{ startup_name }}.	IN	NS	{{ vm2 }}
 
-{% for n in groups['all'] -%}
-		{{ n }}	IN	A	{{ hostvars[n]['ansible_default_ipv4']['address'] }}
+{% for vm in groups['dns_servers']%}
+{{ startup_name }}.	IN	NS	{{ vm }}
 {% endfor %}
 
-backup IN A {{ backup_server_ip }}
+{%- for n in groups['all'] -%}
+{{ n }}	IN A {{ hostvars[n]['ansible_default_ipv4']['address'] }}
+{% endfor %}

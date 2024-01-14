@@ -8,17 +8,24 @@
 
   - name: DNS server
     hosts: dns_servers
-    gather_facts: no
+    gather_facts: yes
     roles:
       - bind
     tags: b
-      
-  - name: Update DNS
-    hosts: all
-    gather_facts: no
+
+  - name: DNS records
+    hosts: dns_servers
+    gather_facts: yes
     roles:
-      - update_vm_dns  
-    tags: u
+      - create_records
+    tags: cr
+
+  # - name: Update DNS
+  #   hosts: all
+  #   gather_facts: no
+  #   roles:
+  #     - update_vm_dns  
+  #   tags: u
 
   - name: Database server
     hosts: db_servers
