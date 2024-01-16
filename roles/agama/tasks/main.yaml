@@ -23,9 +23,10 @@
     name: agama-{{ item|int +1 }}
     image: agama
     env: 
-      AGAMA_DATABASE_URI: mysql+pymysql://{{mysql_user}}:{{mysql_password}}@mysql-2/{{mysql_database}}
+      AGAMA_DATABASE_URI: mysql+pymysql://{{mysql_user}}:{{mysql_password}}@{{ mysql_host }}/{{mysql_database}}
     state: started
     published_ports: 
       - "{{ agama_port + item|int }}:8000"
+    restart_policy: always
   no_log: true
   loop: "{{ range(agama_quantity) | list}}"

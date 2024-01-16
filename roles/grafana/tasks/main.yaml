@@ -42,3 +42,4 @@
     state: started
     volumes: /opt/grafana:/etc/grafana
     published_ports: "{{ grafana_port }}:3000"
+    restart_policy: always

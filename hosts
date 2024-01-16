@@ -1,38 +1,42 @@
 demetr25-1 ansible_host=193.40.156.67 ansible_port="{{ port1 }}" ansible_user=ubuntu
 demetr25-2 ansible_host=193.40.156.67 ansible_port="{{ port2 }}" ansible_user=ubuntu
+demetr25-3 ansible_host=193.40.156.67 ansible_port="{{ port3 }}" ansible_user=ubuntu
 
 [dns_servers:children]
-dns_primary
 dns_secondary
-
-[dns_primary]
-demetr25-2
+dns_primary
 
 [dns_secondary]
 demetr25-1
+demetr25-2
+
+[dns_primary]
+demetr25-3
 
 [db_servers]
 demetr25-1
 demetr25-2
 
-[web_servers]
+[nginx]
+demetr25-1
+demetr25-2
+demetr25-3
+
+[agama]
 demetr25-1
 demetr25-2
 
 [prometheus]
-demetr25-2
+demetr25-3
 
 [grafana]
-demetr25-1
+demetr25-3
 
 [influxdb]
-demetr25-2
+demetr25-3
 
 [pinger]
-demetr25-2
-
-[docker_servers]
-demetr25-1
+demetr25-3
 
 [keepalived]
 demetr25-1

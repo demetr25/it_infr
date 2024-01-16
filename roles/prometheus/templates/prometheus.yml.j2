@@ -36,7 +36,7 @@ scrape_configs:
   - job_name: 'nginx'
     static_configs:
       - targets: 
-{% for n in groups['web_servers'] %}
+{% for n in groups['nginx'] %}
         - {{ n }}:9113
 {% endfor %}
 

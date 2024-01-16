@@ -1,11 +1,11 @@
 - name: Download InfluxDB deb package
   ansible.builtin.get_url:
     url: https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb
-    dest: /tmp/influxdb_1.8.10_amd64.deb
+    dest: /opt/influxdb_1.8.10_amd64.deb
 
 - name: Install InfluxDB deb package
   ansible.builtin.apt:
-    deb: /tmp/influxdb_1.8.10_amd64.deb
+    deb: /opt/influxdb_1.8.10_amd64.deb
     state: present
 
 - name: Import Influxdata repository key

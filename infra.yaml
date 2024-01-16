@@ -69,14 +69,29 @@
       - grafana
     tags: g
      
-  - name: Web server
-    hosts: web_servers
+  # - name: Web server
+  #   hosts: web_servers
+  #   gather_facts: no
+  #   roles:
+  #     - agama
+  #     #- uwsgi
+  #     - nginx
+  #   tags: w
+
+  - name: Agama containers
+    hosts: agama
     gather_facts: no
     roles:
       - agama
       #- uwsgi
+    tags: a
+
+  - name: nginx
+    hosts: nginx
+    gather_facts: no
+    roles:
       - nginx
-    tags: w
+    tags: n
 
   - name: keepalived
     hosts: keepalived

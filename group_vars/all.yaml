@@ -1,7 +1,8 @@
-port1: 19822
-port2: 9322
+port1: 4622
+port2: 19422
+port3: 17022
 
-mysql_host: demetr25-2
+mysql_host: demetr25-1
 
 influx_host: demetr25-2
 
@@ -123,9 +124,13 @@ cnames:
     machine: "{{ groups['dns_servers'][0] }}"
   - cname: ns-2
     machine: "{{ groups['dns_servers'][1] }}"
+  - cname: ns-3
+    machine: "{{ groups['dns_servers'][2] }}"
   - cname: prometheus
     machine: "{{ groups['prometheus'][0] }}"
   - cname: www-1
-    machine: "{{ groups['web_servers'][0] }}"
+    machine: "{{ groups['nginx'][0] }}"
   - cname: www-2
-    machine: "{{ groups['web_servers'][1] }}"
+    machine: "{{ groups['nginx'][1] }}"
+  - cname: www-3
+    machine: "{{ groups['nginx'][2] }}"
