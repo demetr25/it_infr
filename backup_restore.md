@@ -9,6 +9,7 @@ Before beginning restore procedure add some meaningless items in agama applicati
 
 #### Restore MySQL data from the backup:
 On demetr25-1:
+
     1. sudo su
     2. rm -rf /home/backup/restore/mysql
     3. sudo -u backup duplicity --no-encryption restore rsync://demetr25@backup.akamly.dd//home/demetr25/mysql /home/backup/restore/mysql
@@ -22,6 +23,7 @@ After the procedure is completed you shouldn't see items which were previously a
 
 #### Restore InfluxDB data from the backup:
 On demetr25-3:
+
     1. sudo su
     2. rm -rf /home/backup/restore/influxdb
     3. sudo -u backup duplicity --no-encryption restore rsync://demetr25@backup.akamly.dd//home/demetr25/influxdb /home/backup/restore/influxdb
@@ -29,7 +31,8 @@ On demetr25-3:
     5. influx -execute 'DROP DATABASE telegraf'
     6. influxd restore -portable -database telegraf /home/backup/restore/influxdb
     
-    Run on manager host:
+Run on manager host:
+
     1. ansible-playbook infra.yaml -ti
 
 #### How to check if InfluxDB backup worked?

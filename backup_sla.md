@@ -14,7 +14,7 @@
 - Store backups for 30 days
 
 ### Usability Checks:
-- Regul1ar automated checks of backup integrity and consistency.
+- Regular checks of backup integrity and consistency.
 
 ### Restoration Criteria:
   Backup should be restored in the event of:
