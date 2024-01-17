@@ -39,6 +39,7 @@
     dest: /home/backup/.my.cnf
     owner: backup
     mode: 0400
+  no_log: true
   notify: Restart mysql
 
 - name: Copy cron tab 

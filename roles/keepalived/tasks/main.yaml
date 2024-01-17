@@ -22,6 +22,7 @@
   template:
     dest: /etc/keepalived/keepalived.conf
     src: keepalived.conf.j2
+  no_log: true
   notify: Restart keepalived
 
 - name: keepalived service
