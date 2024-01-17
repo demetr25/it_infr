@@ -3,7 +3,6 @@
 ### Backup Coverage:
 - **MySQL** - Agama Application Database 
 - **InfluxDB** - Telegraf Log Database
-- **Ansible Repository** - Git Repository
 
 ### RPO (Recovery Point Objective):
 - Maximum data loss allowed is 24 hours.
@@ -23,7 +22,7 @@
 - Critical configuration changes leading to issues.
 
 ### RTO (Recovery Time Objective):
-- Aim to restore within 2-3 hours of identifying the issue.
+- Aim to restore within 3 hours of identifying the issue.
 
 ### Restore Procedure
 - Read backup_restore.md
